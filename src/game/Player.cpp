@@ -4141,6 +4141,7 @@ void Player::DeleteOldCharacters(uint32 keepDays)
         while (resultChars->NextRow());
         delete resultChars;
     }
+    sLog.outString();
 }
 
 void Player::SetRoot(bool enable)
