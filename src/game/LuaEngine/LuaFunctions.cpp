@@ -34,7 +34,6 @@ extern "C"
 #include "QuestMethods.h"
 #include "MapMethods.h"
 #include "CorpseMethods.h"
-#include "WeatherMethods.h"
 #include "VehicleMethods.h"
 #include "BattleGroundMethods.h"
 
@@ -47,6 +46,7 @@ ElunaGlobal::ElunaRegister GlobalMethods[] =
     { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },                         // RegisterGuildEvent(event, function)
     { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },                         // RegisterGroupEvent(event, function)
     { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },                   // RegisterCreatureEvent(entry, event, function)
+    { "RegisterUniqueCreatureEvent", &LuaGlobalFunctions::RegisterUniqueCreatureEvent },             // RegisterUniqueCreatureEvent(guid, instance, event, function)
     { "RegisterCreatureGossipEvent", &LuaGlobalFunctions::RegisterCreatureGossipEvent },       // RegisterCreatureGossipEvent(entry, event, function)
     { "RegisterGameObjectEvent", &LuaGlobalFunctions::RegisterGameObjectEvent },               // RegisterGameObjectEvent(entry, event, function)
     { "RegisterGameObjectGossipEvent", &LuaGlobalFunctions::RegisterGameObjectGossipEvent },   // RegisterGameObjectGossipEvent(entry, event, function)
@@ -57,6 +57,7 @@ ElunaGlobal::ElunaRegister GlobalMethods[] =
 
     { "ClearBattleGroundEvents", &LuaGlobalFunctions::ClearBattleGroundEvents },
     { "ClearCreatureEvents", &LuaGlobalFunctions::ClearCreatureEvents },
+    { "ClearUniqueCreatureEvents", &LuaGlobalFunctions::ClearUniqueCreatureEvents },
     { "ClearCreatureGossipEvents", &LuaGlobalFunctions::ClearCreatureGossipEvents },
     { "ClearGameObjectEvents", &LuaGlobalFunctions::ClearGameObjectEvents },
     { "ClearGameObjectGossipEvents", &LuaGlobalFunctions::ClearGameObjectGossipEvents },
@@ -137,10 +138,6 @@ ElunaGlobal::ElunaRegister GlobalMethods[] =
     { "RemoveCorpse", &LuaGlobalFunctions::RemoveCorpse },
     { "ConvertCorpseForPlayer", &LuaGlobalFunctions::ConvertCorpseForPlayer },
     { "RemoveOldCorpses", &LuaGlobalFunctions::RemoveOldCorpses },
-    { "FindWeather", &LuaGlobalFunctions::FindWeather },
-    { "AddWeather", &LuaGlobalFunctions::AddWeather },
-    { "RemoveWeather", &LuaGlobalFunctions::RemoveWeather },
-    { "SendFineWeatherToPlayer", &LuaGlobalFunctions::SendFineWeatherToPlayer },
     { "CreateInt64", &LuaGlobalFunctions::CreateLongLong },
     { "CreateUint64", &LuaGlobalFunctions::CreateULongLong },
 
@@ -652,6 +649,7 @@ ElunaRegister<Player> PlayerMethods[] =
     { "SendVendorWindow", &LuaPlayer::SendVendorWindow },                                 // :SendVendorWindow(unit) - Sends the unit's vendor window to the player
     { "ModifyMoney", &LuaPlayer::ModifyMoney },                                           // :ModifyMoney(amount[, sendError]) - Modifies (does not set) money (copper count) of the player. Amount can be negative to remove copper
     { "LearnSpell", &LuaPlayer::LearnSpell },                                             // :LearnSpell(id) - learns the given spell
+    { "LearnTalent", &LuaPlayer::LearnTalent },
     { "RemoveItem", &LuaPlayer::RemoveItem },                                             // :RemoveItem(item/entry, amount) - Removes amount of item from player
     { "RemoveLifetimeKills", &LuaPlayer::RemoveLifetimeKills },                           // :RemoveLifetimeKills(val) - Removes a specified amount(val) of the player's lifetime (honorable) kills
     { "ResurrectPlayer", &LuaPlayer::ResurrectPlayer },                                   // :ResurrectPlayer([percent[, sickness(bool)]]) - Resurrects the player at percentage, player gets resurrection sickness if sickness set to true
@@ -1190,6 +1188,9 @@ ElunaRegister<Map> MapMethods[] =
     { "GetHeight", &LuaMap::GetHeight },                      // :GetHeight(x, y[, phasemask]) - Returns ground Z coordinate. UNDOCUMENTED
     { "GetWorldObject", &LuaMap::GetWorldObject },            // :GetWorldObject(guid) - Returns a worldobject (player, creature, gameobject..) from the map by it's guid
 
+    // Setters
+    { "SetWeather", &LuaMap::SetWeather },
+
     // Booleans
 #ifndef CLASSIC
     { "IsArena", &LuaMap::IsArena },                          // :IsArena() - Returns the true if the map is an arena, else false UNDOCUMENTED
@@ -1213,24 +1214,6 @@ ElunaRegister<Corpse> CorpseMethods[] =
     { "ResetGhostTime", &LuaCorpse::ResetGhostTime },
     { "SaveToDB", &LuaCorpse::SaveToDB },
     { "DeleteBonesFromWorld", &LuaCorpse::DeleteBonesFromWorld },
-
-    { NULL, NULL }
-};
-
-ElunaRegister<Weather> WeatherMethods[] =
-{
-    // Getters
-    { "GetZoneId", &LuaWeather::GetZoneId },
-
-    // Setters
-    { "SetWeather", &LuaWeather::SetWeather },
-
-    // Boolean
-    { "Regenerate", &LuaWeather::Regenerate },
-    { "UpdateWeather", &LuaWeather::UpdateWeather },
-
-    // Other
-    { "SendWeatherUpdateToPlayer", &LuaWeather::SendWeatherUpdateToPlayer },
 
     { NULL, NULL }
 };
@@ -1396,9 +1379,6 @@ void RegisterFunctions(Eluna* E)
 
     ElunaTemplate<Map>::Register(E, "Map");
     ElunaTemplate<Map>::SetMethods(E, MapMethods);
-
-    ElunaTemplate<Weather>::Register(E, "Weather");
-    ElunaTemplate<Weather>::SetMethods(E, WeatherMethods);
 
     ElunaTemplate<AuctionHouseObject>::Register(E, "AuctionHouseObject");
     ElunaTemplate<AuctionHouseObject>::SetMethods(E, AuctionMethods);

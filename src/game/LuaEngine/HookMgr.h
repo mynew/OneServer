@@ -76,7 +76,7 @@ namespace HookMgr
         TRIGGER_EVENT_ON_TRIGGER                =     24,       // (event, player, triggerId) - Can return true
 
         // Weather
-        WEATHER_EVENT_ON_CHANGE                 =     25,       // (event, weather, state, grade)
+        WEATHER_EVENT_ON_CHANGE                 =     25,       // (event, zoneId, state, grade)
 
         // Auction house
         AUCTION_EVENT_ON_ADD                    =     26,       // (event, AHObject)
@@ -252,6 +252,7 @@ namespace HookMgr
         // UNUSED                                       = 11,   // (event, gameobject)
         GAMEOBJECT_EVENT_ON_ADD                         = 12,   // (event, gameobject)
         GAMEOBJECT_EVENT_ON_REMOVE                      = 13,   // (event, gameobject)
+        GAMEOBJECT_EVENT_ON_USE                         = 14,   // (event, go, player)
         GAMEOBJECT_EVENT_COUNT
     };
 
