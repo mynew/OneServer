@@ -2174,16 +2174,54 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * Unbinds the [Player] from his instances except the one he currently is in.
+     *
+     * Difficulty is not used on classic.
+     *
+     * @param uint32 map = true
+     * @param uint32 difficulty = 0
+     */
     int UnbindInstance(Eluna* /*E*/, lua_State* L, Player* player)
     {
         uint32 map = Eluna::CHECKVAL<uint32>(L, 2);
 #ifndef CLASSIC
-        uint32 difficulty = Eluna::CHECKVAL<uint32>(L, 3);
+        uint32 difficulty = Eluna::CHECKVAL<uint32>(L, 3, 0);
 
         if (difficulty < MAX_DIFFICULTY)
             player->UnbindInstance(map, (Difficulty)difficulty);
 #else
         player->UnbindInstance(map);
+#endif
+        return 0;
+    }
+
+    /**
+     * Unbinds the [Player] from his instances except the one he currently is in.
+     */
+    int UnbindAllInstances(Eluna* /*E*/, lua_State* L, Player* player)
+    {
+#ifdef CLASSIC
+        Player::BoundInstancesMap& binds = player->GetBoundInstances();
+        for (Player::BoundInstancesMap::iterator itr = binds.begin(); itr != binds.end();)
+        {
+            if (itr->first != player->GetMapId())
+                player->UnbindInstance(itr);
+            else
+                ++itr;
+        }
+#else
+        for (uint8 i = 0; i < MAX_DIFFICULTY; ++i)
+        {
+            Player::BoundInstancesMap& binds = player->GetBoundInstances(Difficulty(i));
+            for (Player::BoundInstancesMap::iterator itr = binds.begin(); itr != binds.end();)
+            {
+                if (itr->first != player->GetMapId())
+                    player->UnbindInstance(itr, Difficulty(i));
+                else
+                    ++itr;
+            }
+        }
 #endif
         return 0;
     }
@@ -3038,7 +3076,7 @@ namespace LuaPlayer
         uint32 icon = Eluna::CHECKVAL<uint32>(L, 4);
         uint32 flags = Eluna::CHECKVAL<uint32>(L, 5);
         uint32 data = Eluna::CHECKVAL<uint32>(L, 6);
-        std::string iconText = Eluna::CHECKVAL<std::string>(L, 6);
+        std::string iconText = Eluna::CHECKVAL<std::string>(L, 7);
 
         WorldPacket packet(SMSG_GOSSIP_POI, 4 + 4 + 4 + 4 + 4 + 10);
         packet << flags;

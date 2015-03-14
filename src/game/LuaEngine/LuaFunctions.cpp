@@ -162,6 +162,7 @@ ElunaRegister<Object> ObjectMethods[] =
     // Setters
     { "SetInt32Value", &LuaObject::SetInt32Value },           // :SetInt32Value(index, value) - Sets an int value for the object
     { "SetUInt32Value", &LuaObject::SetUInt32Value },         // :SetUInt32Value(index, value) - Sets an uint value for the object
+    { "UpdateUInt32Value", &LuaObject::UpdateUInt32Value },   // :UpdateUInt32Value(index, value) - Sets an uint value for the object
     { "SetFloatValue", &LuaObject::SetFloatValue },           // :SetFloatValue(index, value) - Sets a float value for the object
     { "SetByteValue", &LuaObject::SetByteValue },             // :SetByteValue(index, offset, value) - Sets a byte value for the object
     { "SetUInt16Value", &LuaObject::SetUInt16Value },         // :SetUInt16Value(index, offset, value) - Sets an uint16 value for the object
@@ -210,7 +211,10 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
     { "GetNearestCreature", &LuaWorldObject::GetNearestCreature },        // :GetNearestCreature([range, entry]) - Returns nearest creature with given entry in sight or given range entry can be 0 or nil for any.
     { "GetNearObject", &LuaWorldObject::GetNearObject },
     { "GetNearObjects", &LuaWorldObject::GetNearObjects },
-    { "GetDistance", &LuaWorldObject::GetDistance },                      // :GetDistance(WorldObject or x, y, z) - Returns the distance between 2 objects or location
+    { "GetDistance", &LuaWorldObject::GetDistance },
+    { "GetExactDistance", &LuaWorldObject::GetExactDistance },
+    { "GetDistance2d", &LuaWorldObject::GetDistance2d },
+    { "GetExactDistance2d", &LuaWorldObject::GetExactDistance2d },
     { "GetRelativePoint", &LuaWorldObject::GetRelativePoint },            // :GetRelativePoint(dist, rad) - Returns the x, y and z of a point dist away from worldobject.
     { "GetAngle", &LuaWorldObject::GetAngle },                            // :GetAngle(WorldObject or x, y) - Returns angle between world object and target or x and y coords.
 
@@ -705,6 +709,7 @@ ElunaRegister<Player> PlayerMethods[] =
     { "LeaveBattleground", &LuaPlayer::LeaveBattleground },                               // :LeaveBattleground([teleToEntryPoint]) - The player leaves the battleground
     // {"BindToInstance", &LuaPlayer::BindToInstance},                                  // :BindToInstance() - Binds the player to the current instance
     { "UnbindInstance", &LuaPlayer::UnbindInstance },                                     // :UnbindInstance(map, difficulty) - Unbinds the player from an instance
+    { "UnbindAllInstances", &LuaPlayer::UnbindAllInstances },                             // :UnbindAllInstances() - Unbinds the player from all instances
     { "RemoveFromBattlegroundRaid", &LuaPlayer::RemoveFromBattlegroundRaid },             // :RemoveFromBattlegroundRaid() - Removes the player from a battleground or battlefield raid
 #if (!defined(TBC) && !defined(CLASSIC))
     { "ResetAchievements", &LuaPlayer::ResetAchievements },                               // :ResetAchievements() - Resets player�s achievements
