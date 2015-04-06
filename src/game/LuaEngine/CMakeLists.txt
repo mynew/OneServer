@@ -44,6 +44,7 @@ if( ${CMAKE_PROJECT_NAME} STREQUAL "TrinityCore" )
     ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Recast/Include
     ${CMAKE_SOURCE_DIR}/dep/g3dlite/include
     ${CMAKE_SOURCE_DIR}/dep/SFMT
+    ${CMAKE_SOURCE_DIR}/dep/cppformat
     ${CMAKE_SOURCE_DIR}/dep/mersennetwister
     ${CMAKE_SOURCE_DIR}/src/server/shared
     ${CMAKE_SOURCE_DIR}/src/server/shared/Configuration
@@ -173,16 +174,19 @@ if( ${CMAKE_PROJECT_NAME} STREQUAL "TrinityCore" )
 
 elseif( ${CMAKE_PROJECT_NAME} STREQUAL "MaNGOS" )
   include_directories(
+    ${CMAKE_SOURCE_DIR}/dep/g3dlite
     ${CMAKE_SOURCE_DIR}/src/shared
     ${CMAKE_SOURCE_DIR}/src/shared/Common
     ${CMAKE_SOURCE_DIR}/src/shared/Utilities
     ${CMAKE_SOURCE_DIR}/src/shared/Log
     ${CMAKE_SOURCE_DIR}/src/shared/DataStores
+    ${CMAKE_SOURCE_DIR}/src/shared/Threading
     ${CMAKE_SOURCE_DIR}/src/framework
     ${CMAKE_SOURCE_DIR}/src/framework/Platform
     ${CMAKE_SOURCE_DIR}/src/game/BattleGround
     ${CMAKE_SOURCE_DIR}/src/game/Server
     ${CMAKE_SOURCE_DIR}/src/game/vmap
+    ${CMAKE_SOURCE_DIR}/src/game/Maps
     ${CMAKE_SOURCE_DIR}/src/game/MotionGenerators
     ${CMAKE_SOURCE_DIR}/src/game/Tools
     ${CMAKE_SOURCE_DIR}/src/game/References
