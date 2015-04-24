@@ -121,6 +121,32 @@ namespace LuaGameObject
     }
 
     /**
+     * Returns the [Player] that can loot the [GameObject]
+     *
+     * @return [Player] player
+     */
+    int GetLootRecipient(Eluna* /*E*/, lua_State* L, GameObject* go)
+    {
+        Eluna::Push(L, go->GetLootRecipient());
+        return 1;
+    }
+
+    /**
+     * Returns the [Group] that can loot the [GameObject]
+     *
+     * @return [Group] group
+     */
+    int GetLootRecipientGroup(Eluna* /*E*/, lua_State* L, GameObject* go)
+    {
+#ifdef TRINITY
+        Eluna::Push(L, go->GetLootRecipientGroup());
+#else
+        Eluna::Push(L, go->GetGroupLootRecipient());
+#endif
+        return 1;
+    }
+
+    /**
      * Sets the state of a [GameObject]
      *
      * <pre>
