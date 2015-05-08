@@ -886,7 +886,7 @@ namespace LuaPlayer
     /**
      * Returns the [Player]s current [BattleGround] type ID
      *
-     * @return BattleGroundTypeId typeId
+     * @return [BattleGroundTypeId] typeId
      */
     int GetBattlegroundTypeId(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -917,7 +917,7 @@ namespace LuaPlayer
      * Returns the [Player]s reputation rank of faction specified
      *
      * @param uint32 faction
-     * @return ReputationRank rank
+     * @return [ReputationRank] rank
      */
     int GetReputationRank(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1117,7 +1117,7 @@ namespace LuaPlayer
      * Returns the status of the [Player]s [Quest] specified by entry ID
      *
      * @param uint32 questId
-     * @return QuestStatus questStatus
+     * @return [QuestStatus] questStatus
      */
     int GetQuestStatus(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1154,7 +1154,7 @@ namespace LuaPlayer
      * Returns the quest level of the [Player]s [Quest] specified by object
      *
      * @param uint32 questId
-     * @return QuestStatus questRewardStatus
+     * @return [QuestStatus] questRewardStatus
      */
     int GetQuestLevel(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1188,7 +1188,7 @@ namespace LuaPlayer
     /**
      * Returns the [Player]s resting type
      *
-     * @return RestType restType
+     * @return [RestType] restType
      */
     int GetRestType(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1309,7 +1309,7 @@ namespace LuaPlayer
     /**
      * Returns the [Player]s GM Rank
      *
-     * @return AccountTypes gmRank
+     * @return [AccountTypes] gmRank
      */
     int GetGMRank(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1340,9 +1340,9 @@ namespace LuaPlayer
     }
 
     /**
-     * Returns the [Player]s current team ID
+     * Returns the [Player]s [TeamId]
      *
-     * @return PvpTeamIndex teamId
+     * @return [TeamId] teamId
      */
     int GetTeam(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1480,7 +1480,7 @@ namespace LuaPlayer
     /**
      * Returns the [Player]s game client locale
      *
-     * @return LocaleConstant locale
+     * @return [LocaleConstant] locale
      */
     int GetDbcLocale(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -1773,7 +1773,7 @@ namespace LuaPlayer
      * - GENDER_MALE    = 0
      * - GENDER_FEMALE  = 1
      *
-     * @param uint32 gender
+     * @param [Gender] gender
      */
     int SetGender(Eluna* /*E*/, lua_State* L, Player* player)
     {
@@ -3282,7 +3282,7 @@ namespace LuaPlayer
     }
 
     /**
-     * Learn the [Player] the [Talent] specified by talent_id and talentRank
+     * Learn the [Player] the talent specified by talent_id and talentRank
      *
      * @param uint32 talent_id
      * @param uint32 talentRank
